@@ -24,8 +24,30 @@ Let's look what you should have inside your `.cc` file:
 
 MyAnalysis::process_event(PHCompositeNode *topNode)
 {
-    // accessing node:
+    // accessing nodes:
     PHG4HitContainer *g4hits = findNode::getClass<PHG4HitContainer>(topNode, "G4HIT_HCALIN");
+    
+    // Get the reconstructed tower jets
+    JetMap *reco_jets = findNode::getClass<JetMap>(topNode, "AntiKt_Tower_r04");
+    
+    // Get the truth jets
+    JetMap *truth_jets = findNode::getClass<JetMap>(topNode, "AntiKt_Truth_r04");
+    
+    // Object type (JetMap), Node tree to search (topNode), Node name on
+    // node tree (AntiKt_Truth_r04)
+    
+    // with the nodes you can analyze it:
+    /// Iterate over the reconstructed jets
+    for (JetMap::Iter recoIter = reco_jets->begin();
+        recoIter != reco_jets->end();
+        ++recoIter)
+    {
+        Jet *recoJet = recoIter->second;
+        m_recojetpt = recoJet->get_pt();
+        if (m_recojetpt < m_minjetpt)
+            continue;
+    }
+    
 }
 ```
 
@@ -53,4 +75,6 @@ $ source $OPT_SPHENIX/bin/setup_local.csh (or sh) $MYINSTALL
 ```
 
 6. Now, you should be able to run the Fun4all macro.
+
+
 
