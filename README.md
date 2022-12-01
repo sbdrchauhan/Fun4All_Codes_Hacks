@@ -27,6 +27,34 @@ MyAnalysis::process_event(PHCompositeNode *topNode)
     // accessing nodes:
     PHG4HitContainer *g4hits = findNode::getClass<PHG4HitContainer>(topNode, "G4HIT_HCALIN");
     
+    // grad the track node and loop over all tracks
+    SvtxTrackMap *_g4tracks = findNode::getClass<SvtxTrackMap>(topNode, "SvtxTrackMap");
+    if (!_g4tracks)
+    {
+        std::cerr << PHWHERE << " ERROR: Can't find SvtxTrackMap." << std::endl;
+        return Fun4AllReturnCodes::ABORTEVENT;
+    }
+    
+    for (SvtxTrackMap::Iter iter=_g4tracks->begin();
+        iter != _g4tracks->end();
+        ++iter)
+    {
+        SvtxTrack *track = &iter->second();
+        
+        // do the stuff with tracks now, see SvtxTrack.h to know what you
+        // can do.
+        track->identify();
+    }
+    
+    // grad the CEMC cluster node and loop over all clusters
+    RawClusterContainer *clusterList = findNode::getClass<RawClusterContainer>(topNode, "CLUSTER_CEMC");
+    
+    if(!clusterList)
+    {
+        std::cerr << PHWHERE << " ERROR: Can't find node CLUSTER_CEMC" << std::endl;
+    }
+    
+    
     // Get the reconstructed tower jets
     JetMap *reco_jets = findNode::getClass<JetMap>(topNode, "AntiKt_Tower_r04");
     
@@ -77,4 +105,5 @@ $ source $OPT_SPHENIX/bin/setup_local.csh (or sh) $MYINSTALL
 6. Now, you should be able to run the Fun4all macro.
 
 
-
+## More info. on DST nodes and the node names
+Found in this page [here](https://wiki.sphenix.bnl.gov/index.php/Example_of_using_DST_nodes). It also has information about how to build analysis package.
