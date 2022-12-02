@@ -107,3 +107,7 @@ $ source $OPT_SPHENIX/bin/setup_local.csh (or sh) $MYINSTALL
 
 ## More info. on DST nodes and the node names
 Found in this page [here](https://wiki.sphenix.bnl.gov/index.php/Example_of_using_DST_nodes). It also has information about how to build analysis package.
+
+## how to make pull request to coresoftware
+
+Information regarding the [steps of pull requests](https://wiki.sphenix.bnl.gov/index.php/GitHub_Coresoftware_Update_Procedures) and some more [tips](https://wiki.sphenix.bnl.gov/index.php/Code_Repository#GitHub_setup) are found in the hyperlink in this sentence. Also [here](https://wiki.sphenix.bnl.gov/index.php/Code_Repository#git_cheat_sheet).
